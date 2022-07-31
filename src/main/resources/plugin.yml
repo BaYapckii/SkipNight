@@ -1,0 +1,6 @@
+name: SkipNight
+version: '${project.version}'
+main: org.skipnight.mc.skipnight.SkipNight
+api-version: 1.19
+authors: [ Feesder ]
+description: Plugin for skip of the night
