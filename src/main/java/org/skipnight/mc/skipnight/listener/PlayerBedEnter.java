@@ -25,11 +25,15 @@ public class PlayerBedEnter implements Listener {
             int playersRequired = (int) (onlinePlayers.size() * 0.4f);
             PlayersOnBed.players += 1;
             SkipCore.sendPlayers(ChatColor.translateAlternateColorCodes('&',
+                    Math.max(playersRequired - PlayersOnBed.players, 0) != 0 ?
                     SkipNight.getInstance().getConfig().getString("message.playerSleep")
                             .replace("{player}", event.getPlayer().getName())
                             .replace("{players}", String.valueOf(
-                                    Math.max(playersRequired - PlayersOnBed.players, 0)
+                                    playersRequired - PlayersOnBed.players
                             ))
+                            :
+                    SkipNight.getInstance().getConfig().getString("message.skipNight")
+                            .replace("{player}", event.getPlayer().getName())
             ), onlinePlayers);
 
             if(PlayersOnBed.players >= playersRequired) {
@@ -37,9 +41,6 @@ public class PlayerBedEnter implements Listener {
                 Bukkit.getScheduler().scheduleAsyncDelayedTask(SkipNight.getInstance(), () -> {
                     Bukkit.getScheduler().scheduleSyncDelayedTask(SkipNight.getInstance(), () -> {
                         SkipCore.skipNight(time);
-                        SkipCore.sendPlayers(
-                                ChatColor.translateAlternateColorCodes('&', SkipNight.getInstance().getConfig().getString("message.skipNight")), onlinePlayers
-                        );
                     });
                 });
             }
