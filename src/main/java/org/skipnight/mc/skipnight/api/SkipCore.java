@@ -10,8 +10,9 @@ import java.util.concurrent.TimeUnit;
 
 public class SkipCore {
     public static void skipNight(long time) {
+        long fullTime = Bukkit.getServer().getWorld("world").getFullTime();
         try {
-            for(long i = time; i <= 23600; i += 100) {
+            for(long i = fullTime; i <= (fullTime - time) + 23600; i += 100) {
                 TimeUnit.MILLISECONDS.sleep(50);
                 Bukkit.getServer().getWorld("world").setTime(i);
             }
